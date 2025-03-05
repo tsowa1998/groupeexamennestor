@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu de Citation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        .quote {
+            font-size: 1.5em;
+            margin: 20px 0;
+            text-align: center;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .result {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container"></div>
+        <h1>Jeu de Citation</h1>
+        <div id="quote" class="quote"></div>
+        <input type="text" id="answer" placeholder="Devinez l'auteur..." />
+        <button onclick="checkAnswer()">Vérifier</button>
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        const quotes = [
+            { text: "Je pense, donc je suis.", author: "René Descartes" },
+            { text: "Soyez le changement que vous voulez voir dans le monde.", author: "Mahatma Gandhi" },
+            { text: "La vie est un défi, relève-le !", author: "Mère Teresa" },
+            { text: "L'important n'est pas de convaincre, mais de savoir écouter.", author: "Jacques Salomé" },
+            { text: "Le seul vrai voyage, ce ne serait pas d'aller vers de nouveaux paysages, mais d'avoir d'autres yeux.", author: "Marcel Proust" },
+            { text: "Le bonheur n'est pas quelque chose de prêt à l'emploi. Il vient de vos propres actions.", author: "Dalaï Lama" },
+            { text: "La connaissance parle, mais la sagesse écoute.", author: "Jimi Hendrix" }
+        ];
+
+        let currentQuote;
+        let quoteInterval;
+
+        function newQuote() {
+            currentQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            document.getElementById('quote').innerText = currentQuote.text;
+            document.getElementById('result').innerText = '';
+            document.getElementById('answer').value = '';
+        }
+
+        function checkAnswer() {
+            const userAnswer = document.getElementById('answer').value.trim();
+            const resultDiv = document.getElementById('result');
+            if (userAnswer.toLowerCase() === currentQuote.author.toLowerCase()) {
+                resultDiv.innerText = "Correct !";
+            } else {
+                resultDiv.innerText = "Incorrect. L'auteur est : " + currentQuote.author;
+            }
+            clearInterval(quoteInterval);
+            quoteInterval = setInterval(newQuote, 5000);
+        }
+
+        // Initial call to display a quote
+        window.onload = function() {
+            newQuote();
+            quoteInterval = setInterval(newQuote, 5000);
+        };
+    </script>
+</body>
+</html>
