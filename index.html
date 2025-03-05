@@ -42,6 +42,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            margin-top: 10px;
         }
         button:hover {
             background: #218838;
@@ -53,7 +54,7 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container"></div>
         <h1>Jeu de Citation</h1>
         <div id="quote" class="quote"></div>
         <input type="text" id="answer" placeholder="Devinez l'auteur..." />
@@ -66,10 +67,14 @@
             { text: "Je pense, donc je suis.", author: "René Descartes" },
             { text: "Soyez le changement que vous voulez voir dans le monde.", author: "Mahatma Gandhi" },
             { text: "La vie est un défi, relève-le !", author: "Mère Teresa" },
-            { text: "L'important n'est pas de convaincre, mais de savoir écouter.", author: "Jacques Salomé" }
+            { text: "L'important n'est pas de convaincre, mais de savoir écouter.", author: "Jacques Salomé" },
+            { text: "Le seul vrai voyage, ce ne serait pas d'aller vers de nouveaux paysages, mais d'avoir d'autres yeux.", author: "Marcel Proust" },
+            { text: "Le bonheur n'est pas quelque chose de prêt à l'emploi. Il vient de vos propres actions.", author: "Dalaï Lama" },
+            { text: "La connaissance parle, mais la sagesse écoute.", author: "Jimi Hendrix" }
         ];
 
         let currentQuote;
+        let quoteInterval;
 
         function newQuote() {
             currentQuote = quotes[Math.floor(Math.random() * quotes.length)];
@@ -86,11 +91,15 @@
             } else {
                 resultDiv.innerText = "Incorrect. L'auteur est : " + currentQuote.author;
             }
-            newQuote();
+            clearInterval(quoteInterval);
+            quoteInterval = setInterval(newQuote, 5000);
         }
 
         // Initial call to display a quote
-        newQuote();
+        window.onload = function() {
+            newQuote();
+            quoteInterval = setInterval(newQuote, 5000);
+        };
     </script>
 </body>
 </html>
